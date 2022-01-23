@@ -8,12 +8,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class StarshipRepository @Inject constructor() : IStarshipRepository {
+class StarshipRepository @Inject constructor(
+    val remoteDataSource: StarshipRemoteDatasource,
+    val localDataSource: StarshipDao) : IStarshipRepository {
 
-    @Inject lateinit var remoteDataSource: StarshipRemoteDatasource
-    @Inject lateinit var localDataSource: StarshipDao
-
-   override fun getStarships() = performGetOperation(
+    override fun getStarships() = performGetOperation(
         databaseQuery = {
             localDataSource.getStarships()
         },
@@ -22,7 +21,8 @@ class StarshipRepository @Inject constructor() : IStarshipRepository {
         },
         saveCallResult = {
 
-            localDataSource.insertAll(it.results.map { starship -> kotlin.run { starship.toDBO() } }.toList())
+            localDataSource.insertAll(it.results.map { starship -> kotlin.run { starship.toDBO() } }
+                .toList())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

@@ -53,21 +53,15 @@ class StartshipsFragment : Fragment() {
     }
 
     private fun setupObserver() {
+
+        binding.starshipViewModel?.starships?.observe(viewLifecycleOwner,  {
+            binding.rcyStarships.adapter?.notifyDataSetChanged()
+        })
+
         binding.starshipViewModel?._starships?.observe(viewLifecycleOwner,  {
             when(it.status) {
                 Resource.Status.LOADING -> {}
-                Resource.Status.SUCCESS -> {
-                    //refresh the data
-                    if(!it.data.isNullOrEmpty()) {
-                        it.data.let {
-                            viewModel.starships = it.sortedByDescending {
-                                it.name.length
-                            }
-
-                            binding.rcyStarships.adapter?.notifyDataSetChanged()
-                        }
-                    }
-                }
+                Resource.Status.SUCCESS -> { }
                 Resource.Status.ERROR -> {}
             }
         })

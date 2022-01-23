@@ -53,19 +53,16 @@ class FilmsFragment : Fragment() {
     }
 
     private fun setupObserver() {
+
+        binding.filmsViewModel?.films?.observe(viewLifecycleOwner, {
+            binding.rcyFilms.adapter?.notifyDataSetChanged()
+        })
+
+        //Basically could setup loading bar and other status depending on error and all
         binding.filmsViewModel?._films?.observe(viewLifecycleOwner, {
             when(it.status) {
                 Resource.Status.LOADING -> {}
-                Resource.Status.SUCCESS -> {
-
-                    viewModel.films = it.data?.map {
-                        it.toDomainModel()
-                    }?.sortedByDescending {
-                        it.releaseDate
-                    }?.toList()
-
-                    binding.rcyFilms.adapter?.notifyDataSetChanged()
-                }
+                Resource.Status.SUCCESS -> {}
                 Resource.Status.ERROR -> {}
             }
         })

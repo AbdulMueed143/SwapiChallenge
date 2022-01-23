@@ -32,7 +32,7 @@ class FilmsListAdapter(private val viewModel: FilmsViewModel) : RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = viewModel.films?.get(position)
+        val item = viewModel.films.value?.get(position)
         holder.bind(viewModel, item)
     }
 
@@ -41,7 +41,7 @@ class FilmsListAdapter(private val viewModel: FilmsViewModel) : RecyclerView.Ada
     }
 
     override fun getItemCount(): Int {
-        return viewModel.films?.size ?: 0
+        return viewModel.films.value?.size ?: 0
     }
 
 }

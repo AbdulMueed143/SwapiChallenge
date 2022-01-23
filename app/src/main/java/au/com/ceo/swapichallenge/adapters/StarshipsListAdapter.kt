@@ -32,7 +32,7 @@ class StarshipsListAdapter(private val viewModel: StarshipsViewModel) : Recycler
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = viewModel.starships?.get(position)
+        val item = viewModel.starships.value?.get(position)
         holder.bind(viewModel, item)
     }
 
@@ -41,7 +41,7 @@ class StarshipsListAdapter(private val viewModel: StarshipsViewModel) : Recycler
     }
 
     override fun getItemCount(): Int {
-        return viewModel.starships?.size ?: 0
+        return viewModel.starships.value?.size ?: 0
     }
 
 }
