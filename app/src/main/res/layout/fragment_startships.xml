@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+
+        <variable
+            name="starshipViewModel"
+            type="au.com.ceo.swapichallenge.models.viewmodels.StarshipsViewModel" />
+
+    </data>
+
+    <FrameLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".StartshipsFragment">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyStarships"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:items="@{starshipViewModel.starships}" />
+
+    </FrameLayout>
+
+</layout>
